@@ -4,6 +4,7 @@ resources:
   - ../base/kafka-streams
   - ../base/iotedge
   - ../base/kafka
+  - platform-apps.yaml
 
 patchesStrategicMerge:
   - cluster-patch.yaml
