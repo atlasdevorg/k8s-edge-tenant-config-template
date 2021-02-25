@@ -18,5 +18,5 @@ patchesStrategicMerge:
   - cluster-patch.yaml
   #- sealed-acr-pull-secret-patch.yaml
   #- sealed-device-connection-string-secret-patch.yaml
-  - persistent-volumes-patch.yaml
+  #- persistent-volumes-patch.yaml
 
