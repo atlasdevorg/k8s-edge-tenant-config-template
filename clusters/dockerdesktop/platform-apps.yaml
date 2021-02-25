@@ -15,7 +15,7 @@ spec:
   validation: client
 
   patchesStrategicMerge:
-    - ../../apps/dockerdesktop/cluster-patch.yaml
+    - ../../../apps/dockerdesktop/cluster-patch.yaml
     #- sealed-acr-pull-secret-patch.yaml
     #- sealed-device-connection-string-secret-patch.yaml
     - - ../../apps/dockerdesktop/persistent-volumes-patch.yaml
