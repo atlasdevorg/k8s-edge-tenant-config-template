@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 10m0s
   dependsOn:
-    - name: infrastructure
+    - name: tenant-infrastructure
   sourceRef:
     kind: GitRepository
     name: base
@@ -14,9 +14,4 @@ spec:
   prune: true
   validation: client
 
-  patchesStrategicMerge:
-    - ../../../dockerdesktop/cluster-patch.yaml
-    #- sealed-acr-pull-secret-patch.yaml
-    #- sealed-device-connection-string-secret-patch.yaml
-    - - ../../apps/dockerdesktop/persistent-volumes-patch.yaml
 

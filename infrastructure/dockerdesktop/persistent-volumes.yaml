@@ -3,6 +3,12 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv1
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv1
   nodeAffinity:
@@ -19,6 +25,12 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv2
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv2
   nodeAffinity:
@@ -35,6 +47,12 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv3
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv3
   nodeAffinity:
@@ -51,6 +69,11 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv4
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv4
@@ -68,6 +91,12 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv5
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv5
   nodeAffinity:
@@ -84,6 +113,12 @@ kind: PersistentVolume
 metadata:
   name: local-storage-pv6
 spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /run/desktop/mnt/c/docker/volumes/pv6
   nodeAffinity:
