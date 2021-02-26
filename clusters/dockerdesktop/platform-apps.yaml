@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: base
-  path: ./apps/base
+  path: ./platform-apps/base
   prune: true
   validation: client
 
