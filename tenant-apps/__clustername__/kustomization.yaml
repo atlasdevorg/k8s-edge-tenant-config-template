@@ -2,4 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - kafka-streams-image-policy.yaml
+  - kafka-streams-image-repository.yaml
+  - kafka-streams-image-update-automation.yaml
 
+  - kafka-streams-job-apply-aggregation-rules.yaml
+  - kafka-streams-job-apply-dependent-rules.yaml
+  - kafka-streams-job-apply-isolated-rules.yaml
+  - kafka-streams-job-apply-process-rules.yaml
+  - kafka-streams-job-join-data-with-rules.yaml
+  - kafka-streams-job-router.yaml
+
+  ###support-entitychanged-flag### kafka-streams-job-entitychanged-input.yaml
+  ###support-entitychanged-flag### kafka-streams-job-entitychanged-output.yaml

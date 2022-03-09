@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-streams-job-join-data-with-rules
+  namespace: kafka-streams
+  labels:
+    app: kafka-streams-job-join-data-with-rules
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: kafka-streams-job-join-data-with-rules
+  template:
+    metadata:
+      labels:
+        app: kafka-streams-job-join-data-with-rules
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+        - name: kafka-streams-job-join-data-with-rulesd
+          image: __atlascontainerrepository__/boost-kafka-streams-edge:1.0.2 # {"$imagepolicy": "flux-system:kafka-streams-image-policy"} 
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: kafka-cluster-kafka-bootstrap.kafka:9092
+            - name: CLASS
+              value: soda.jobs.cloudevents.JoinRulesToDataJob
+            - name: APPLICATION_ID
+              value: streams-join-data-with-rules-job
+            - name: SOURCE_TOPIC
+              value: data
+
+            - name: JOINOPTIMISETODATA_OPTIMISE_SOURCE_TOPIC
+              value: fieldrules
+            - name: JOINOPTIMISETODATA_HAS_OPTIMISE_OUTPUT_TOPIC
+              value: withrules
+            - name: JOINOPTIMISETODATA_NO_OPTIMISE_OUTPUT_TOPIC
+              value: checkreferences
+            
+            - name: AUTO_OFFSET_RESET_CONFIG
+              value: latest  
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi

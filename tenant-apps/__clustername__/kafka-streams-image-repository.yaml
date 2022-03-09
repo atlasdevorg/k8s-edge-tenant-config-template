@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImageRepository
+metadata:
+  name: kafka-streams-image-repository
+  namespace: flux-system
+spec:
+  image: __atlascontainerrepository__/boost-kafka-streams-edge
+  interval: 5m0s
+  secretRef:
+    name: acr-secret
