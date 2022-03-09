@@ -1,0 +1,13 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImagePolicy
+metadata:
+  name: kafka-streams-image-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: kafka-streams-image-repository
+  filterTags:
+    pattern: '^\d{1,}[.]\d{1,}[.]\d{1,}-__envimagetag__[.]\d'
+  policy:
+    semver:
+      range: '1.x.x-__envimagetag__'

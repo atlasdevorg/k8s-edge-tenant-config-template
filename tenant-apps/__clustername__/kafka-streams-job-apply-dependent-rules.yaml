@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-streams-job-apply-dependent-rules
+  namespace: kafka-streams
+  labels:
+    app: kafka-streams-job-apply-dependent-rules
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: kafka-streams-job-apply-dependent-rules
+  template:
+    metadata:
+      labels:
+        app: kafka-streams-job-apply-dependent-rules
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+        - name: kafka-streams-job-apply-dependent-rulesd
+          image: __atlascontainerrepository__/boost-kafka-streams-edge:1.0.2 # {"$imagepolicy": "flux-system:kafka-streams-image-policy"} 
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: kafka-cluster-kafka-bootstrap.kafka:9092
+            - name: CLASS
+              value: soda.jobs.cloudevents.ApplyDependentRulesJob
+            - name: APPLICATION_ID
+              value: streams-apply-dependent-rules
+            - name: SOURCE_TOPIC
+              value: withrules
+            - name: OUTPUT_TOPIC
+              value: checkreferences
+            
+            - name: APPLYDEPENDENTRULES_TELEMETRYDATA_SOURCE_TOPIC
+              value: data
+
+            - name: AUTO_OFFSET_RESET_CONFIG
+              value: latest  
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi

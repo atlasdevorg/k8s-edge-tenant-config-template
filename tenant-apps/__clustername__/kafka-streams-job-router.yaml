@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-streams-job-router
+  namespace: kafka-streams
+  labels:
+    app: kafka-streams-job-router
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: kafka-streams-job-router
+  template:
+    metadata:
+      labels:
+        app: kafka-streams-job-router
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+        - name: kafka-streams-job-routerd
+          image: __atlascontainerrepository__/boost-kafka-streams-edge:1.0.2 # {"$imagepolicy": "flux-system:kafka-streams-image-policy"} 
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: kafka-cluster-kafka-bootstrap.kafka:9092
+            - name: CLASS
+              value: soda.jobs.cloudevents.RouterJob
+            - name: APPLICATION_ID
+              value: streams-router-job
+            - name: SOURCE_TOPIC
+              value: input
+
+            - name: CLOUDEVENTSROUTER_DATA_TOPIC
+              value: data
+            - name: CLOUDEVENTSROUTER_OPTIMISE_TOPIC
+              value: fieldrules
+            - name: CLOUDEVENTSROUTER_PROCESS_TOPIC
+              value: process
+            - name: CLOUDEVENTSROUTER_ENTITY_CHANGED_EVENT_TOPIC
+              value: entitychangedinput
+
+            - name: CLOUDEVENTSROUTER_DATA_TOPIC_EVENT_TYPE
+              value: com.weareatlas.resources.ResourceFieldData
+            - name: CLOUDEVENTSROUTER_OPTIMISE_TOPIC_EVENT_TYPE
+              value: com.weareatlas.resources.ResourceFieldRules
+            - name: CLOUDEVENTSROUTER_PROCESS_TOPIC_EVENT_TYPE
+              value: com.weareatlas.play.processstatechange
+            - name: CLOUDEVENTSROUTER_ENTITY_CHANGED_TOPIC_EVENT_TYPE
+              value: com.weareatlas.edge.EntityChangedEvent
+            
+            - name: AUTO_OFFSET_RESET_CONFIG
+              value: latest  
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
